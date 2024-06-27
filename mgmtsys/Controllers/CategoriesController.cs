@@ -1,6 +1,7 @@
 ﻿using mgmtsys.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Runtime.CompilerServices;
 
 namespace mgmtsys.Controllers
 {
@@ -17,8 +18,19 @@ namespace mgmtsys.Controllers
            return View(category);
 
         }
+        [HttpPost]
         public IActionResult Edit(Category category)
         {
-        }   
+            if (ModelState.IsValid)
+            {
+                CategoriesRepo.UpdateCategory(category.CategoryId, category);
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(category);
+        }
+        
+
+
     }
 }
